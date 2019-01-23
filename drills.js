@@ -1,15 +1,6 @@
 
 
 // DRAW a BST
-//  3
-//  /\
-// 1    4
-//  \     \
-//   2      6
-//         /  \
-//        5     9
-//             /
-//           7
 
 
 //Remove the Root
@@ -34,7 +25,7 @@ class BinarySearchTree {
     this.left = null;
     this.right = null;
   }
-
+  
   insert(key, value) {
     if (this.key === null) {
       this.key = key;
@@ -57,7 +48,7 @@ class BinarySearchTree {
       }
     }
   }
-
+  
   remove(key) {
     if (this.key === key) {
       if (this.left && this.right) {
@@ -93,9 +84,9 @@ class BinarySearchTree {
       throw new Error('Key Error');
     }
   }
-
+  
   find(key) {
-  //if the item is found at the root then return that value
+    //if the item is found at the root then return that value
     if (this.key === key) {
       return this.value;
     }
@@ -120,7 +111,7 @@ class BinarySearchTree {
       throw new Error('Key Error');
     }
   }
-
+  
   _replaceWith(node) {
     if (this.parent) {
       if (this === this.parent.left) {
@@ -129,7 +120,7 @@ class BinarySearchTree {
       else if (this === this.parent.right) {
         this.parent.right = node;
       }
-
+      
       if (node) {
         node.parent = this.parent;
       }
@@ -149,7 +140,7 @@ class BinarySearchTree {
       }
     }
   }
-
+  
   _findMin() {
     if (!this.left) {
       return this;
@@ -162,10 +153,10 @@ class BinarySearchTree {
     }
     return this.right._findMax();
   }
-
-
-
-
+  
+  
+  
+  
 }
 
 const height = tree => {
@@ -174,60 +165,75 @@ const height = tree => {
   }
   const left = height(tree.left);
   const right = height(tree.right);
-
+  
   return Math.max(left, right) +1;
 };
 
+//  3
+//  /\
+// 1    4
+//  \     \
+//   2      6
+//         /  \
+//        5     9
+//             /
+//           7
 
-const isBST = (tree) => {
-  //const root = tree.key;
+// function isBST(tree, key=tree.key) {
+//   const root = key;
+//   const left = tree.left;
+//   const right = tree.right;
+
+
+  
+//   if (root > left) {
+//     console.log(`root: ${root} is greater than left: ${left}`);
+//     left = left.left
+//   } else {
+//     return false;
+//   }
+
+//   if (root < right) {
+//     console.log(`root: ${root} is greater than right: ${right}`);
+//     right = right.right;
+//   } else {
+//     return false;
+//   }
+
+const isBST = (tree, root=tree.key) => {
   if (!tree) {
     return false;
   }
-
+  
   if (!tree.left && !tree.right) {
     console.log("189");
     return true;
   }
-
-  // if (tree.right) {
-  //   if (root < tree.right.key){
-  //     console.log("tree.key", tree.key);
-  //     console.log("tree.key.right", tree.right.key);
-  //     return isBST(tree.right);
-  //   } else {
-  //     return false;
-  //   }
-  // }
-  //
-  // if (tree.left) {
-  //   if (root > tree.left.key){
-  //     console.log("tree.key is ", tree.key);
-  //     console.log("left");
-  //     return isBST(tree.left);
-  //
-  //   }else{
-  //     return false;
-  //   }
-  // }
-  //console.log(tree.right);
-  if (tree.right < tree.left){
+  
+  if (tree.right.key < tree.left.key){
     console.log("right", tree.right);
     return false;
-  }else if(tree.left > tree.key){
-    console.log("left", tree.left);
+  }else if(tree.left.key > root){
+    console.log("left", tree.left.key);
     return false;
   }else{
-    if (tree.left){
-      console.log("left key", tree.left.key, tree.key);
+    if (tree.left.key){
+      console.log("left key", tree.left.key, root);
+    } else {
+      console.log('left is null');
     }
-    if (tree.right){
-      console.log("right key", tree.right.key, tree.key);
+    if (tree.right.key){
+      console.log("right key", tree.right.key, root);
+    } else {
+      console.log('right is null');
     }
-    isBST(tree.left);
-    isBST(tree.right);
+    if (isBST(tree.left.key, tree.key) && isBST(tree.right.key, tree.key)) {
+      return true;
+    } else {
+      return false;
+    }
   }
-  return true;
+  // return true;
 };
 
 
